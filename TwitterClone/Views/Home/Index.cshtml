@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<style>
+    .baslik{
+        height:3rem;
+        margin-top:20px;
+    }
+    input[type=file] {
+        width: 90px;
+        color: transparent;
+    }
+</style>
+
+<div class="container">
+    <div class="container baslik text-center">
+        <div class="row">
+            <div class="col">
+                Sana Özel
+            </div>
+            <div class="col">
+                Takip Edilenler
+            </div>
+        </div>
+    </div>
+    <div >
+        <div class="input-group mb-3">
+            <span class="input-group-text">a</span>
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                <label for="floatingTextarea2">Neler Oluyor?</label>
+            </div>
+        </div>
+        <div class="container baslik text-center">
+            <div class="row">
+                <div class="col">
+                    <input type="file" />
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary">Gönder</button>
+                </div>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>
