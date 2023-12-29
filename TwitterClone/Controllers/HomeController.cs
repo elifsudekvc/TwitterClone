@@ -1,17 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using TwitterClone.Models;
 
 namespace TwitterClone.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly string _apiBaseUrl = "https://localhost:44357/api/tweet";
         public ActionResult Index()
         {
             return View();
         }
+
+        public async Task<JsonResult> GetAllTweet()
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.GetAsync(_apiBaseUrl);
+                response.EnsureSuccessStatusCode();
+                var tweet = await response.Content.ReadAsAsync<IEnumerable<Tweet>>();
+                return Json(tweet, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
 
     }
 }

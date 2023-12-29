@@ -93,3 +93,7 @@ C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\obj\Debug\TwitterCl
 C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\obj\Debug\TwitterClone.csproj.CopyComplete
 C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\obj\Debug\TwitterClone.dll
 C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\obj\Debug\TwitterClone.pdb
+C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\Dapper.dll
+C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\System.Data.SqlClient.dll
+C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\Dapper.xml
+C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\System.Data.SqlClient.xml

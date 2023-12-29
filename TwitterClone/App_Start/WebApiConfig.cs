@@ -13,7 +13,7 @@ namespace TwitterClone
 
             // Web API yolları
             config.MapHttpAttributeRoutes();
-
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
