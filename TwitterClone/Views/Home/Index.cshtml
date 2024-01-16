@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<TwitterClone.Models.Tweet>
+@{
     ViewBag.Title = "Home Page";
 }
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
@@ -52,10 +53,10 @@
     }
 
 
-    .card:hover, .card:hover .card-header {
-        background-color: #F7F7F7;
-        cursor:pointer;
-    }
+        .card:hover, .card:hover .card-header {
+            background-color: #F7F7F7;
+            cursor: pointer;
+        }
 
     .tweet-photo {
         text-align: center !important;
@@ -65,7 +66,7 @@
 
     .tweet-icon {
         cursor: pointer;
-        width:1%;
+        width: 1%;
     }
 
     .icons {
@@ -215,46 +216,47 @@
 
         function displayTweets(tweets) {
             var tweetContainer = $("#tweetContainer");
-
             tweets.forEach(function (tweet) {
                 var tweetTime = moment(tweet.TweetTime);
                 var tweetHtml = `
-                    <div class="card">
-                        <h6 class="card-header">
-                            <img class="profile-img" src="${tweet.User.UserImg}" />
-                            ${tweet.User.UserName}
-                            <span style="color:darkgray">@@${tweet.User.UserLink} - ${formatTweetTime(tweetTime)} </span>
-                           <button class="btn delete-button" data-toggle="modal" data-target="#DeleteConfirmation" onclick="deleteClick(${tweet.TweetId})" data-tweetid="${tweet.TweetId}"><i class="bi bi-trash"></i></button>
-                        </h6>
-                        <div class="card-body">
-                            <p class="card-text">${tweet.TweetContent}</p>
-                            <div class="container baslik text-center">
-                                <div class="row icons">
-                                    <div class="col">
-                                        <i class="bi bi-chat tweet-icon"> 8</i>
-                                    </div>
-                                    <div class="col">
-                                        <i class="bi bi-arrow-repeat tweet-icon"> 100</i>
-                                    </div>
-                                    <div class="col">
-                                        <i class="bi bi-heart tweet-icon"> 300</i>
-                                    </div>
-                                    <div class="col">
-                                        <i class="bi bi-bar-chart-line tweet-icon"> 7k</i>
-                                    </div>
-                                    <div class="col">
-                                        <i class="bi bi-upload"></i>
-                                    </div>
-                                </div>
+            <div class="card">
+                <h6 class="card-header">
+                    <img class="profile-img" src="${tweet.User.UserImg}" />
+                    ${tweet.User.UserName}
+                    <span style="color:darkgray">@@${tweet.User.UserLink} - ${formatTweetTime(tweetTime)} </span>
+                    <button class="btn delete-button" data-toggle="modal" data-target="#DeleteConfirmation" onclick="deleteClick(${tweet.TweetId})" data-tweetid="${tweet.TweetId}">
+                    <i class="bi bi-trash"></i>
+                    </button>
+                </h6>
+                <div class="card-body">
+                    <p class="card-text">${tweet.TweetContent}</p>
+                    <div class="container baslik text-center">
+                        <div class="row icons">
+                            <div class="col">
+                                <i class="bi bi-chat tweet-icon"> 8</i>
+                            </div>
+                            <div class="col">
+                                <i class="bi bi-arrow-repeat tweet-icon"> 100</i>
+                            </div>  
+                            <div class="col">
+                                <i class="bi bi-heart tweet-icon"> 300</i>
+                            </div>
+                            <div class="col">
+                                <i class="bi bi-bar-chart-line tweet-icon"> 7k</i>
+                            </div>
+                            <div class="col">
+                                <i class="bi bi-upload"></i>
                             </div>
                         </div>
                     </div>
-                `;
+                </div>
+            </div>
+        `;
 
                 tweetContainer.prepend(tweetHtml);
-
             });
         }
+
         function formatTweetTime(tweetTime) {
             var now = moment();
             var diffSecond = now.diff(tweetTime, 'second')
@@ -274,21 +276,20 @@
         }
 
         $('#gonderButton').on('click', function () {
-            location.reload();
             var tweetContent = $('#textArea').val();
-
+            location.reload();
             var newTweet = {
                 TweetContent: tweetContent,
             };
 
             $.ajax({
-                url: "/Home/AddTweet",
+                url: "/api/tweet",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(newTweet),
                 success: function (addedTweet) {
                     $('#textArea').val('');
-                    displayTweets(addedTweet);
+                    displayTweets([addedTweet]); 
                     location.reload();
                 },
                 error: function (error) {

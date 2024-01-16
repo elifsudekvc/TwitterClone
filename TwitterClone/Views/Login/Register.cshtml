@@ -1,0 +1,151 @@
+﻿@model TwitterClone.Models.User
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/LoginLayout.cshtml";
+}
+<style type="text/css">
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #495057;
+    }
+
+    h1 {
+        width: 30rem;
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    .form-container {
+        width: 60%;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .control-label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .form-control {
+        width: 95%;
+        padding: 8px;
+        font-size: 1em;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .btn-default {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .grs{
+        text-decoration:none;
+    }
+
+    .gonder {
+        background-color: #1D9BF0;
+        color: white;
+        border-radius: 20px;
+        font-weight: 600;
+        margin-top: 10px;
+        width: 60%;
+    }
+
+        .gonder:hover {
+            background-color: #1A8CD8;
+            color: white;
+        }
+
+    hr {
+        width: 24rem;
+    }
+
+    @@media screen and (max-width:1000) {
+        .form-control {
+            width: 30px;
+            margin-left: -30px;
+        }
+        .form-group {
+            width: 70%;
+        }
+    }
+</style>
+
+<div>
+    <h1>Şu anda olup bitenler</h1>
+
+    <br />
+    <h4>Hemen Katıl</h4>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserLink, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserLink, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserLink, "", new { @class = "text-danger" })
+        </div>
+    </div>  
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserEmail, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.PasswordFor(model => model.UserPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.UserPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Kayıt Ol" class="btn gonder" />
+        </div>
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <span>Zaten bir hesabın var mı?</span>
+                <br />
+                <ul class="grs">@Html.ActionLink("Giriş yap", "Login", "Login")</ul>
+            </div>
+        </div>
+</div>
+    }
+</div>
+

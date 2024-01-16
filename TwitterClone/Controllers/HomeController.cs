@@ -12,6 +12,8 @@ namespace TwitterClone.Controllers
     public class HomeController : Controller
     {
         private readonly string _apiBaseUrl = "https://localhost:44357/api/tweet";
+
+        [CustomAuthorize]
         public ActionResult Index()
         {
             return View();

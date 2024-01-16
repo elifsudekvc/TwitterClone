@@ -72,7 +72,6 @@ C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\System.Web.Razo
 C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\System.Web.WebPages.xml
 C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\System.Web.WebPages.Deployment.xml
 C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\System.Web.WebPages.Razor.xml
-C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\Newtonsoft.Json.xml
 C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\Antlr3.Runtime.pdb
 C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\System.Net.Http.Formatting.xml
 C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\System.Web.Http.xml
@@ -97,3 +96,8 @@ C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\Dapper.dll
 C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\System.Data.SqlClient.dll
 C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\Dapper.xml
 C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\System.Data.SqlClient.xml
+C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\Dapper.Contrib.dll
+C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\JWT.dll
+C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\Dapper.Contrib.xml
+C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\JWT.pdb
+C:\Users\eskvc\OneDrive\Masaüstü\TwitterClone\TwitterClone\bin\JWT.xml

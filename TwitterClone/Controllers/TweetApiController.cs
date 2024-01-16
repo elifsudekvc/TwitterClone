@@ -30,7 +30,7 @@ namespace TwitterClone.Controllers
                 var query = @"
                         SELECT 
                         t.TweetId, t.TweetContent, t.TweetImg, t.TweetTime,
-                        u.UserId AS UserId, u.UserName, u.UserLink, u.UserDescription, u.UserImg
+                        u.UserId AS UserId, u.UserName, u.UserLink, u.UserImg
                         FROM Tweet t
                         JOIN [User] u ON t.UserId = u.UserId
                     ";
@@ -60,7 +60,7 @@ namespace TwitterClone.Controllers
                 var query = @"
             SELECT 
             t.TweetId, t.TweetContent, t.TweetImg, t.TweetTime,
-            u.UserId AS UserId, u.UserName, u.UserLink, u.UserDescription, u.UserImg
+            u.UserId AS UserId, u.UserName, u.UserLink, u.UserImg
             FROM Tweet t
             JOIN [User] u ON t.UserId = u.UserId
             WHERE t.TweetId = @TweetId
@@ -97,12 +97,12 @@ namespace TwitterClone.Controllers
                 dbConnection.Open();
 
                 var query = @"
-                    INSERT INTO Tweet (TweetContent, TweetImg, TweetTime, UserId)
-                    VALUES (@TweetContent, @TweetImg, GETDATE(),(SELECT [UserId] FROM [dbo].[User] WHERE [UserName] = 'Sude'));
-                    SELECT CAST(SCOPE_IDENTITY() as int)
-                ";
+                INSERT INTO Tweet (TweetContent, TweetImg, TweetTime, UserId)
+                VALUES (@TweetContent, @TweetImg, GETDATE(), (SELECT [UserId] FROM [dbo].[User] WHERE [UserEmail] = @UserEmail));
+                SELECT CAST(SCOPE_IDENTITY() as int)
+            ";
 
-                var tweetId = dbConnection.Query<int>(query, newTweet).Single();
+                var tweetId = dbConnection.Query<int>(query, new { TweetContent = newTweet.TweetContent, TweetImg = newTweet.TweetImg, UserEmail = User.Identity.Name }).Single();
                 newTweet.TweetId = tweetId;
 
                 return Ok(newTweet);
