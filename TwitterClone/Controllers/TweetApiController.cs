@@ -1,4 +1,4 @@
-﻿using Dapper;
+﻿﻿using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -30,7 +30,7 @@ namespace TwitterClone.Controllers
                 var query = @"
                         SELECT 
                         t.TweetId, t.TweetContent, t.TweetImg, t.TweetTime,
-                        u.UserId AS UserId, u.UserName, u.UserLink, u.UserImg
+                        u.UserId AS UserId, u.UserName, u.UserLink, u.UserImg, u.UserEmail
                         FROM Tweet t
                         JOIN [User] u ON t.UserId = u.UserId
                     ";
@@ -47,7 +47,7 @@ namespace TwitterClone.Controllers
 
                 return Ok(tweetsWithUser);
             }
-        }
+            }
 
         [HttpGet]
         [Route("api/tweet/{id}")]
@@ -60,7 +60,7 @@ namespace TwitterClone.Controllers
                 var query = @"
             SELECT 
             t.TweetId, t.TweetContent, t.TweetImg, t.TweetTime,
-            u.UserId AS UserId, u.UserName, u.UserLink, u.UserImg
+            u.UserId AS UserId, u.UserName, u.UserLink, u.UserImg, u.UserEmail
             FROM Tweet t
             JOIN [User] u ON t.UserId = u.UserId
             WHERE t.TweetId = @TweetId

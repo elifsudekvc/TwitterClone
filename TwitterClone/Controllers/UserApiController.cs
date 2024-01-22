@@ -25,8 +25,9 @@ namespace TwitterClone.Controllers
             _connectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
         }
 
+
         [HttpGet]
-        [Route("{userId:int}")]
+        [Route("api/user/{userId:int}")]
         public IHttpActionResult UserProfile(int userId)
         {
             using (SqlConnection dbConnection = new SqlConnection(_connectionString))

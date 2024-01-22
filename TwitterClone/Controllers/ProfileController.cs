@@ -17,7 +17,7 @@ namespace TwitterClone.Controllers
         {
             return View();
         }
-
+        [CustomAuthorize]
         public async Task<JsonResult> UserProfile(int userId)
         {
             using (var httpClient = new HttpClient())

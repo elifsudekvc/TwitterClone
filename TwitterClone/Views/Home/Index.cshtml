@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TwitterClone.Models.Tweet>
+﻿﻿@model IEnumerable<TwitterClone.Models.Tweet>
 @{
     ViewBag.Title = "Home Page";
 }
@@ -197,7 +197,7 @@
 </div>
 
 <script>
-     moment.locale("TR-tr");
+    moment.locale("TR-tr");
     $(document).ready(function () {
         getAllTweets();
         function getAllTweets() {
@@ -237,7 +237,7 @@
                             </div>
                             <div class="col">
                                 <i class="bi bi-arrow-repeat tweet-icon"> 100</i>
-                            </div>  
+                            </div>
                             <div class="col">
                                 <i class="bi bi-heart tweet-icon"> 300</i>
                             </div>
@@ -289,7 +289,7 @@
                 data: JSON.stringify(newTweet),
                 success: function (addedTweet) {
                     $('#textArea').val('');
-                    displayTweets([addedTweet]); 
+                    displayTweets([addedTweet]);
                     location.reload();
                 },
                 error: function (error) {
