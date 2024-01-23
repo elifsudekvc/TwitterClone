@@ -25,7 +25,7 @@ namespace TwitterClone.Models
         public string UserEmail { get; set; }
         [DisplayName("Parola")]
         public string UserPassword { get; set; }
-        public Tweet tweet { get; set; }
+        public virtual Tweet tweet { get; set; }
 
         public void HashPassword()
         {

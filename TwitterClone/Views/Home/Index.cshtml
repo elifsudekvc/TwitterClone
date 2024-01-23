@@ -277,7 +277,6 @@
 
         $('#gonderButton').on('click', function () {
             var tweetContent = $('#textArea').val();
-            location.reload();
             var newTweet = {
                 TweetContent: tweetContent,
             };
@@ -290,7 +289,7 @@
                 success: function (addedTweet) {
                     $('#textArea').val('');
                     displayTweets([addedTweet]);
-                    location.reload();
+
                 },
                 error: function (error) {
                     console.log("Tweet gönderirken bir hata oluştu:", error);

@@ -18,6 +18,12 @@ namespace TwitterClone
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Login", action = "Login", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "UserProfile",
+                url: "Profile/{id}",
+                defaults: new { controller = "Profile", action = "Index", id = UrlParameter.Optional }
+            );
+
         }
     }
 }

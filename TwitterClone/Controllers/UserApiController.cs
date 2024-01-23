@@ -62,9 +62,11 @@ namespace TwitterClone.Controllers
                     splitOn: "UserId"
                 );
 
-                return Ok(new {result});
+                
+                return Ok(result);
             }
         }
+
 
     }
 }

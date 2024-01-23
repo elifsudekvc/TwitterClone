@@ -1,4 +1,4 @@
-﻿
+﻿﻿@model IEnumerable<TwitterClone.Models.Tweet>
 @{
     ViewBag.Title = "Home Page";
 }
@@ -22,21 +22,26 @@
         border-color: #D8DEE2;
         margin-left: 30px;
     }
-    #name{
-        font-size:xx-large
+
+    #name {
+        font-size: xx-large
     }
-    #link{
-        color:gray;
-        margin-top:-10px;
+
+    #link {
+        color: gray;
+        margin-top: -10px;
     }
-    #Takip{
-        font-size:small;
+
+    #Takip {
+        font-size: small;
     }
+
     .container {
         margin: 20px;
     }
-    hr{
-        width:80%;
+
+    hr {
+        width: 80%;
     }
 </style>
 
@@ -72,96 +77,117 @@
     </div>
 </div>
 
+
 <script>
     moment.locale("TR-tr");
-
     $(document).ready(function () {
-        var userId = User.userId;
+        userId = @ViewBag.UserId;
+        getAllTweets();
+        function getAllTweets() {
+            $.ajax({
+                url: `/api/user/${userId}`,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    displayTweets(data);
+                },
+                error: function (error) {
+                    console.log("Tweetleri getirirken bir hata oluştu:", error);
+                }
+            });
+        }
 
-    getUserProfile(userId);
-    function getUserProfile(userId) {
-        $.ajax({
-            url: `/Profile/UserProfile`,
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                displayUserProfile(data);
-            },
-            error: function (error) {
-                console.log("Error fetching user profile:", error);
-            }
-        });
-    }
-
-    function displayUserProfile(userProfile) {
-        $('#name').text(userProfile.UserName);
-        $('#link').text(`@@${userProfile.UserLink}`);
-
-        displayTweets(userProfile.UserTweets);
-    }
-
-    function displayTweets(tweets) {
-        var tweetContainer = $("#tweetContainer");
-
-        tweets.forEach(function (tweet) {
-            var tweetTime = moment(tweet.TweetTime);
-            var tweetHtml = `
-                <div class="card">
-                    <h6 class="card-header">
-                        <img class="profile-img" src="${tweet.User.UserImg}" />
-                        ${tweet.User.UserName}
-                        <span style="color:darkgray">@@${tweet.User.UserLink} - ${formatTweetTime(tweetTime)} </span>
-                        <button class="btn delete-button" data-toggle="modal" data-target="#DeleteConfirmation" onclick="deleteClick(${tweet.TweetId})" data-tweetid="${tweet.TweetId}">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </h6>
-                    <div class="card-body">
-                        <p class="card-text">${tweet.TweetContent}</p>
-                        <div class="container baslik text-center">
-                            <div class="row icons">
-                                <div class="col">
-                                    <i class="bi bi-chat tweet-icon"> 8</i>
-                                </div>
-                                <div class="col">
-                                    <i class="bi bi-arrow-repeat tweet-icon"> 100</i>
-                                </div>
-                                <div class="col">
-                                    <i class="bi bi-heart tweet-icon"> 300</i>
-                                </div>
-                                <div class="col">
-                                    <i class="bi bi-bar-chart-line tweet-icon"> 7k</i>
-                                </div>
-                                <div class="col">
-                                    <i class="bi bi-upload"></i>
-                                </div>
+        function displayTweets(tweets) {
+            var tweetContainer = $("#tweetContainer");
+            tweets.forEach(function (tweet) {
+                var tweetTime = moment(tweet.TweetTime);
+                var tweetHtml = `
+            <div class="card">
+                <h6 class="card-header">
+                    <img class="profile-img" src="${tweet.User.UserImg}" />
+                    ${tweet.User.UserName}
+                    <span style="color:darkgray">@@${tweet.User.UserLink} - ${formatTweetTime(tweetTime)} </span>
+                    <button class="btn delete-button" data-toggle="modal" data-target="#DeleteConfirmation" onclick="deleteClick(${tweet.TweetId})" data-tweetid="${tweet.TweetId}">
+                    <i class="bi bi-trash"></i>
+                    </button>
+                </h6>
+                <div class="card-body">
+                    <p class="card-text">${tweet.TweetContent}</p>
+                    <div class="container baslik text-center">
+                        <div class="row icons">
+                            <div class="col">
+                                <i class="bi bi-chat tweet-icon"> 8</i>
+                            </div>
+                            <div class="col">
+                                <i class="bi bi-arrow-repeat tweet-icon"> 100</i>
+                            </div>
+                            <div class="col">
+                                <i class="bi bi-heart tweet-icon"> 300</i>
+                            </div>
+                            <div class="col">
+                                <i class="bi bi-bar-chart-line tweet-icon"> 7k</i>
+                            </div>
+                            <div class="col">
+                                <i class="bi bi-upload"></i>
                             </div>
                         </div>
                     </div>
                 </div>
-            `;
+            </div>
+        `;
 
-            tweetContainer.prepend(tweetHtml);
+                tweetContainer.prepend(tweetHtml);
+            });
+        }
+
+        function formatTweetTime(tweetTime) {
+            var now = moment();
+            var diffSecond = now.diff(tweetTime, 'second')
+            var diffMinutes = now.diff(tweetTime, 'minutes');
+            var diffHours = now.diff(tweetTime, 'hours');
+
+            if (diffSecond < 60) {
+                return diffSecond + 'sn'
+            }
+            else if (diffMinutes < 60) {
+                return diffMinutes + 'd';
+            } else if (diffHours < 24) {
+                return diffHours + 's';
+            } else {
+                return tweetTime.format('D MMM');
+            }
+        }
+
+        function deleteProduct(TweetId) {
+            $('#DeleteConfirmation').modal('show');
+
+            $('#ConfirmDelete').on('click', function () {
+                $.ajax({
+                    url: "/Home/DeleteTweet/" + TweetId,
+                    type: "DELETE",
+                    contentType: "application/json",
+                    success: function (data) {
+                        console.log('Success:', data);
+                        $('#DeleteConfirmation').modal('hide');
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                        alert('Error deleting tweet.');
+                    }
+                });
+            });
+        }
+
+
+        $(document).on('click', '.delete-button', function () {
+            var tweetId = $(this).data('tweetid');
+            deleteProduct(tweetId);
         });
-    }
 
-    function formatTweetTime(tweetTime) {
-        var now = moment();
-        var diffSecond = now.diff(tweetTime, 'second')
-        var diffMinutes = now.diff(tweetTime, 'minutes');
-        var diffHours = now.diff(tweetTime, 'hours');
-
-        if (diffSecond < 60) {
-            return diffSecond + 'sn'
-        }
-        else if (diffMinutes < 60) {
-            return diffMinutes + 'd';
-        } else if (diffHours < 24) {
-            return diffHours + 's';
-        } else {
-            return tweetTime.format('D MMM');
-        }
-    }
-
-});
+    });
 
 </script>
+
+
+

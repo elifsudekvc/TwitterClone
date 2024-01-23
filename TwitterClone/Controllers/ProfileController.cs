@@ -13,8 +13,13 @@ namespace TwitterClone.Controllers
     public class ProfileController : Controller
     {
         private readonly string _apiBaseUrl = "https://localhost:44357/api/user";
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            if (!id.HasValue)
+            {
+                id = Convert.ToInt32(Session["UserId"]);
+                ViewBag.UserId = id;
+            }
             return View();
         }
         [CustomAuthorize]
@@ -43,7 +48,6 @@ namespace TwitterClone.Controllers
                 return Json(viewModel, JsonRequestBehavior.AllowGet);
             }
         }
-
-
     }
+
 }
