@@ -105,7 +105,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <button class="btn gonder" id="gonderButton" type="submit">Gönder</button>
+                    <button class="btn gonder" type="button" id="gonderButton">Gönder</button>
                 </div>
             </div>
         </div>
@@ -289,14 +289,14 @@
                 success: function (addedTweet) {
                     $('#textArea').val('');
                     displayTweets([addedTweet]);
-
+                    
                 },
                 error: function (error) {
                     console.log("Tweet gönderirken bir hata oluştu:", error);
                 }
             });
+            location.reload();
         });
-
         function deleteProduct(TweetId) {
             $('#DeleteConfirmation').modal('show');
 
