@@ -44,6 +44,13 @@
     .card-header {
         border: none;
     }
+    .kullanici{
+        text-decoration:none;
+        color:black;
+    }
+    .kullanici:hover{
+        color:darkblue;
+    }
 
     .card {
         border-radius: 1px;
@@ -221,8 +228,10 @@
                 var tweetHtml = `
             <div class="card">
                 <h6 class="card-header">
-                    <img class="profile-img" src="${tweet.User.UserImg}" />
-                    ${tweet.User.UserName}
+                       <a class="kullanici" href="/User/Index/${tweet.User.UserId}">
+                            <img class="profile-img" src="${tweet.User.UserImg}" />
+                            ${tweet.User.UserName}
+                        </a>
                     <span style="color:darkgray">@@${tweet.User.UserLink} - ${formatTweetTime(tweetTime)} </span>
                     <button class="btn delete-button" data-toggle="modal" data-target="#DeleteConfirmation" onclick="deleteClick(${tweet.TweetId})" data-tweetid="${tweet.TweetId}">
                     <i class="bi bi-trash"></i>
@@ -287,16 +296,16 @@
                 contentType: "application/json",
                 data: JSON.stringify(newTweet),
                 success: function (addedTweet) {
-                    $('#textArea').val('');
-                    displayTweets([addedTweet]);
-                    
+                        $('#textArea').val('');
+                        displayTweets([addedTweet]);
                 },
                 error: function (error) {
                     console.log("Tweet gönderirken bir hata oluştu:", error);
                 }
             });
-            location.reload();
+            
         });
+
         function deleteProduct(TweetId) {
             $('#DeleteConfirmation').modal('show');
 

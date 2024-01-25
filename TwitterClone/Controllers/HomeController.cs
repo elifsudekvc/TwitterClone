@@ -48,7 +48,7 @@ namespace TwitterClone.Controllers
                 var response = await httpClient.PostAsJsonAsync(_apiBaseUrl, newTweet);
                 response.EnsureSuccessStatusCode();
                 var addedTweet = await response.Content.ReadAsAsync<Tweet>();
-                return Json(addedTweet);
+                return Json(addedTweet, JsonRequestBehavior.AllowGet);
             }
         }
 
