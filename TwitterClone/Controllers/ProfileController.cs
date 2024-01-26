@@ -48,6 +48,7 @@ namespace TwitterClone.Controllers
                 return Json(viewModel, JsonRequestBehavior.AllowGet);
             }
         }
+
     }
 
 }

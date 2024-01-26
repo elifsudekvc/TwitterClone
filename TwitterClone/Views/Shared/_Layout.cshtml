@@ -142,7 +142,9 @@
                                 <a class="nav-link" href="#"><i class="bi bi-star"></i> Premium</a>
                             </li>
                             <li class="nav-item">
-                                <a href="@Url.Action("Index", "Profile")" class="nav-link" href="#"><i class="bi bi-person-square"></i> Profil</a>
+                                <a href="@Url.Action("Index", "Profile", new { id = ViewBag.UserId })" class="nav-link">
+                                    <i class="bi bi-person-square"></i> Profil
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("Logout", "Login")">Logout</a>

@@ -139,7 +139,22 @@
         <p id="Takip"> 80 Takip Edilen  180 Takipçi</p>
     </div>
     <hr />
-
+    <div class="modal fade" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="DeleteConfirmationLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="DeleteConfirmationLabel">Gönderi silinsin mi?</h5>
+                </div>
+                <div class="modal-body">
+                    Tweeti silmek istediğine emin misin?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="CancelDelete" data-bs-dismiss="modal">İptal</button>
+                    <button type="button" class="btn btn-danger" id="ConfirmDelete">Sil</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="tweetContainer">
 
     </div>

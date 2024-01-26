@@ -11,7 +11,7 @@ using Dapper;
 
 namespace TwitterClone.Controllers
 {
-    [Route("api/user")]
+    
     public class UserApiController : ApiController
     {
         //UserProfile
@@ -45,7 +45,7 @@ namespace TwitterClone.Controllers
                 var query = @"
             SELECT 
             t.TweetId, t.TweetContent, t.TweetImg, t.TweetTime,
-            u.UserId AS UserId, u.UserName, u.UserLink, u.UserImg
+            u.UserId AS UserId, u.UserName, u.UserLink,u.UserDescription, u.UserImg
             FROM Tweet t
             JOIN [User] u ON t.UserId = u.UserId
             WHERE u.UserId = @UserId
@@ -67,6 +67,6 @@ namespace TwitterClone.Controllers
             }
         }
 
-
+        
     }
 }

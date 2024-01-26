@@ -12,7 +12,7 @@ namespace TwitterClone.Controllers
 {
     public class UserController : Controller
     {
-        private readonly string _apiBaseUrl = "https://localhost:44357/api/users";
+        private readonly string _apiBaseUrl = "https://localhost:44357/api/user";
         public ActionResult Index(int? id)
         {
             ViewBag.UserId = id;
@@ -44,5 +44,6 @@ namespace TwitterClone.Controllers
             }
 
         }
+
     }
 }

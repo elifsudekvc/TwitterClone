@@ -113,44 +113,21 @@
     }
 </style>
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <img class="profileImg" src="~/Images/XLogo.png" />
-        </div>
-        <div class="col">
-            <button type="button" class="btn" id="ProfiliDuzenle">Profili Düzenle</button>
-        </div>
-    </div>
-    <br />
-    <div>
-        <h5 id="name">@ViewBag.UserName</h5>
-        <p id="link">@@@Session["UserLink"].ToString()</p>
-    </div>
-    <div>
-        @if (Session["UserDescription"] == null)
-        {
-            <p id="description"></p>
-        }
-        else
-        {
-            <p id="description">@Session["UserDescription"].ToString()</p>
-        }
+<div id="Usercontainer">
 
-        <p id="Takip"> 80 Takip Edilen  180 Takipçi</p>
-    </div>
-    <hr />
 
-    <div id="tweetContainer">
-
-    </div>
 </div>
+<hr />
 
+<div id="tweetContainer">
+
+</div>
 
 <script>
     moment.locale("TR-tr");
     $(document).ready(function () {
         userId = @ViewBag.UserId;
+        getUser();
         getAllTweets();
         function getAllTweets() {
             $.ajax({
@@ -165,6 +142,46 @@
                 }
             });
         }
+        function getUser() {
+            $.ajax({
+                url: `/api/user/${userId}`,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    displayUser(data);
+                },
+                error: function (error) {
+                    console.log("Tweetleri getirirken bir hata oluştu:", error);
+                }
+            });
+        }
+        function displayUser(user) {
+            var Usercontainer = $("#Usercontainer");
+            user.forEach(function (u) {
+                var containerHtml = `
+                 <div class="row">
+                    <div class="col">
+                        <img class="profileImg" src="${u.User.UserName}" />
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn" id="ProfiliDuzenle">Profili Düzenle</button>
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <h5 id="name">${u.User.UserName}</h5>
+                    <p id="link">@@${u.User.UserLink}</p>
+                </div>
+                <div>
+                <p id="description">${u.User.UserDescription || ''}</p>
+                    <p id="Takip"> 80 Takip Edilen  180 Takipçi</p>
+                </div>
+             `;
+
+                Usercontainer.append(containerHtml);
+            });
+        }
+
 
         function displayTweets(tweets) {
             var tweetContainer = $("#tweetContainer");
@@ -176,9 +193,6 @@
                     <img class="profile-img" src="${tweet.User.UserImg}" />
                     ${tweet.User.UserName}
                     <span style="color:darkgray">@@${tweet.User.UserLink} - ${formatTweetTime(tweetTime)} </span>
-                    <button class="btn delete-button" data-toggle="modal" data-target="#DeleteConfirmation" onclick="deleteClick(${tweet.TweetId})" data-tweetid="${tweet.TweetId}">
-                    <i class="bi bi-trash"></i>
-                    </button>
                 </h6>
                 <div class="card-body">
                     <p class="card-text">${tweet.TweetContent}</p>
@@ -226,33 +240,6 @@
                 return tweetTime.format('D MMM');
             }
         }
-
-        function deleteTweet(TweetId) {
-            $('#DeleteConfirmation').modal('show');
-
-            $('#ConfirmDelete').on('click', function () {
-                $.ajax({
-                    url: "/Home/DeleteTweet/" + TweetId,
-                    type: "DELETE",
-                    contentType: "application/json",
-                    success: function (data) {
-                        console.log('Success:', data);
-                        $('#DeleteConfirmation').modal('hide');
-                        location.reload();
-                    },
-                    error: function (error) {
-                        console.log('Error:', error);
-                        alert('Error deleting tweet.');
-                    }
-                });
-            });
-        }
-
-
-        $(document).on('click', '.delete-button', function () {
-            var tweetId = $(this).data('tweetid');
-            deleteTweet(tweetId);
-        });
 
     });
 

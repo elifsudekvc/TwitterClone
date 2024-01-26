@@ -233,9 +233,6 @@
                             ${tweet.User.UserName}
                         </a>
                     <span style="color:darkgray">@@${tweet.User.UserLink} - ${formatTweetTime(tweetTime)} </span>
-                    <button class="btn delete-button" data-toggle="modal" data-target="#DeleteConfirmation" onclick="deleteClick(${tweet.TweetId})" data-tweetid="${tweet.TweetId}">
-                    <i class="bi bi-trash"></i>
-                    </button>
                 </h6>
                 <div class="card-body">
                     <p class="card-text">${tweet.TweetContent}</p>
@@ -304,33 +301,6 @@
                 }
             });
             
-        });
-
-        function deleteProduct(TweetId) {
-            $('#DeleteConfirmation').modal('show');
-
-            $('#ConfirmDelete').on('click', function () {
-                $.ajax({
-                    url: "/Home/DeleteTweet/" + TweetId,
-                    type: "DELETE",
-                    contentType: "application/json",
-                    success: function (data) {
-                        console.log('Success:', data);
-                        $('#DeleteConfirmation').modal('hide');
-                        location.reload();
-                    },
-                    error: function (error) {
-                        console.log('Error:', error);
-                        alert('Error deleting tweet.');
-                    }
-                });
-            });
-        }
-
-
-        $(document).on('click', '.delete-button', function () {
-            var tweetId = $(this).data('tweetid');
-            deleteProduct(tweetId);
         });
 
     });
