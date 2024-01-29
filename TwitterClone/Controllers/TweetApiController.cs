@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using TwitterClone.Models;
+using WebGrease.Activities;
 
 namespace TwitterClone.Controllers
 {
@@ -97,10 +100,34 @@ namespace TwitterClone.Controllers
                 dbConnection.Open();
 
                 var query = @"
-                INSERT INTO Tweet (TweetContent, TweetImg, TweetTime, UserId)
-                VALUES (@TweetContent, @TweetImg, GETDATE(), (SELECT [UserId] FROM [dbo].[User] WHERE [UserEmail] = @UserEmail));
-                SELECT CAST(SCOPE_IDENTITY() as int)
-            ";
+            INSERT INTO Tweet (TweetContent, TweetImg, TweetTime, UserId)
+            VALUES (@TweetContent, @TweetImg, GETDATE(), (SELECT [UserId] FROM [dbo].[User] WHERE [UserEmail] = @UserEmail));
+            SELECT CAST(SCOPE_IDENTITY() as int)
+        ";
+
+                var file = HttpContext.Current.Request.Files.Count > 0 ? HttpContext.Current.Request.Files[0] : null;
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var fileExtension = Path.GetExtension(fileName);
+                    var filePath = "/AppFile/Images/" + Guid.NewGuid().ToString() + fileExtension;
+
+                    using (var fileStream = file.InputStream)
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            fileStream.CopyTo(memoryStream);
+                            var fileBytes = memoryStream.ToArray();
+
+                            // Dosyanın yolunu Tweet'e ekleyin
+                            newTweet.TweetImg = filePath;
+
+                            // Dosyayı sunucuya kaydedin
+                            File.WriteAllBytes(HttpContext.Current.Server.MapPath("~" + filePath), fileBytes);
+                        }
+                    }
+                }
 
                 var tweetId = dbConnection.Query<int>(query, new { TweetContent = newTweet.TweetContent, TweetImg = newTweet.TweetImg, UserEmail = User.Identity.Name }).Single();
                 newTweet.TweetId = tweetId;
@@ -108,6 +135,7 @@ namespace TwitterClone.Controllers
                 return Ok(newTweet);
             }
         }
+
 
         [HttpDelete]
         [Route("api/tweet/{id}")]
