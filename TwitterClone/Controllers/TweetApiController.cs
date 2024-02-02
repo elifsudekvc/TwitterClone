@@ -109,25 +109,35 @@ namespace TwitterClone.Controllers
 
                 if (file != null && file.ContentLength > 0)
                 {
-                    var fileName = Path.GetFileName(file.FileName);
-                    var fileExtension = Path.GetExtension(fileName);
-                    var filePath = "/AppFile/Images/" + Guid.NewGuid().ToString() + fileExtension;
-
-                    using (var fileStream = file.InputStream)
+                    try
                     {
-                        using (var memoryStream = new MemoryStream())
+                        var fileName = Path.GetFileName(file.FileName);
+                        var fileExtension = Path.GetExtension(fileName);
+                        var filePath = "~/Images/" + Guid.NewGuid().ToString() + fileExtension; // Dosya yolu oluşturma
+
+                        using (var fileStream = file.InputStream)
                         {
-                            fileStream.CopyTo(memoryStream);
-                            var fileBytes = memoryStream.ToArray();
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                fileStream.CopyTo(memoryStream);
+                                var fileBytes = memoryStream.ToArray();
 
-                            // Dosyanın yolunu Tweet'e ekleyin
-                            newTweet.TweetImg = filePath;
+                                // Dosyayı sunucuya kaydetme
+                                var physicalPath = HttpContext.Current.Server.MapPath(filePath);
+                                File.WriteAllBytes(physicalPath, fileBytes);
 
-                            // Dosyayı sunucuya kaydedin
-                            File.WriteAllBytes(HttpContext.Current.Server.MapPath("~" + filePath), fileBytes);
+                                // Tweet nesnesine dosya yolunu ekleyin
+                                newTweet.TweetImg = filePath;
+                            }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        // Hata durumunda loglama veya uygun işlemleri yapma
+                        Console.WriteLine("Dosya kaydedilirken bir hata oluştu: " + ex.Message);
+                    }
                 }
+
 
                 var tweetId = dbConnection.Query<int>(query, new { TweetContent = newTweet.TweetContent, TweetImg = newTweet.TweetImg, UserEmail = User.Identity.Name }).Single();
                 newTweet.TweetId = tweetId;

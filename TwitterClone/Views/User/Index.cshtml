@@ -157,30 +157,31 @@
         }
         function displayUser(user) {
             var Usercontainer = $("#Usercontainer");
-            user.forEach(function (u) {
+            if (user.length > 0) {
+                var u = user[0]; // İlk kullanıcıyı al
                 var containerHtml = `
-                 <div class="row">
-                    <div class="col">
-                        <img class="profileImg" src="${u.User.UserName}" />
-                    </div>
-                    <div class="col">
-                        <button type="button" class="btn" id="ProfiliDuzenle">Profili Düzenle</button>
-                    </div>
+            <div class="row">
+                <div class="col">
+                    <img class="profileImg" src="${u.User.UserName}" />
                 </div>
-                <br />
-                <div>
-                    <h5 id="name">${u.User.UserName}</h5>
-                    <p id="link">@@${u.User.UserLink}</p>
+                <div class="col">
+                    <button type="button" class="btn" id="ProfiliDuzenle">Profili Düzenle</button>
                 </div>
-                <div>
+            </div>
+            <br />
+            <div>
+                <h5 id="name">${u.User.UserName}</h5>
+                <p id="link">@@${u.User.UserLink}</p>
+            </div>
+            <div>
                 <p id="description">${u.User.UserDescription || ''}</p>
-                    <p id="Takip"> 80 Takip Edilen  180 Takipçi</p>
-                </div>
-             `;
-
+                <p id="Takip"> 80 Takip Edilen  180 Takipçi</p>
+            </div>
+        `;
                 Usercontainer.append(containerHtml);
-            });
+            }
         }
+
 
 
         function displayTweets(tweets) {
